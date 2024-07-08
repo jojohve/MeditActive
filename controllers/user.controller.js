@@ -2,7 +2,6 @@ const User = require('../models/user.model');
 
 // Create and Save a new User
 exports.create = (req, res) => {
-  // Validate request
   if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!'
@@ -59,7 +58,6 @@ exports.findOne = (req, res) => {
 
 // Update a User identified by the userId in the request
 exports.update = (req, res) => {
-  // Validate Request
   if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!'
