@@ -15,6 +15,8 @@ require('./routes/user.routes')(app);
 
 require('./routes/range.routes')(app);
 
+require('./routes/goal.routes')(app);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}.`);
 });
