@@ -1,12 +1,18 @@
-const express = require('express')
-const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
 
-const app = express()
+app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
-    res.send('Hello World')
-})
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(3000)
-console.log("Connessione Riuscita");
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to our application.' });
+});
+
+require('./routes/user.routes')(app);
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}.`);
+});
