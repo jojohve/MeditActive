@@ -1,19 +1,18 @@
 module.exports = app => {
-    const goals = require('../controllers/goal.controller');
+    const goals = require('../controllers/goal_controller');
   
-    // Create a new Goal
+    // Creare un Obiettivo
     app.post('/goals', goals.create);
   
-    // Retrieve all Goals
+    // Leggere gli Obiettivi
     app.get('/goals', goals.findAll);
   
-    // Retrieve a single Goal with goalId
+    // Leggere un Obiettivo
     app.get('/goals/:goalId', goals.findOne);
   
-    // Update a Goal with goalId
+    // Modificare un Obiettivo
     app.put('/goals/:goalId', goals.update);
   
-    // Delete a Goal with goalId
+    // Cancellare un Obiettivo
     app.delete('/goals/:goalId', goals.delete);
   };
-  

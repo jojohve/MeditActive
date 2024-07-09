@@ -1,8 +1,6 @@
-const Goal = require('../models/goal.model');
+const Goal = require('../models/goal_model');
 
-// Create and Save a new Goal
 exports.create = (req, res) => {
-  // Validate request
   if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!'
@@ -10,13 +8,12 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Goal
+  // Creare un Obiettivo
   const goal = new Goal({
     goal: req.body.goal,
     range_id: req.body.range_id
   });
 
-  // Save Goal in the database
   Goal.create(goal, (err, data) => {
     if (err)
       res.status(500).send({
@@ -27,7 +24,6 @@ exports.create = (req, res) => {
   });
 };
 
-// Retrieve all Goals from the database.
 exports.findAll = (req, res) => {
   Goal.getAll((err, data) => {
     if (err)
@@ -39,7 +35,7 @@ exports.findAll = (req, res) => {
   });
 };
 
-// Find a single Goal with a goalId
+// Leggere gli ObiettivI
 exports.findOne = (req, res) => {
   Goal.findById(req.params.goalId, (err, data) => {
     if (err) {
@@ -56,9 +52,8 @@ exports.findOne = (req, res) => {
   });
 };
 
-// Update a Goal identified by the goalId in the request
+// Modificare un Obiettivo
 exports.update = (req, res) => {
-  // Validate Request
   if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!'
@@ -85,7 +80,7 @@ exports.update = (req, res) => {
   );
 };
 
-// Delete a Goal with the specified goalId in the request
+// Eliminare un Obiettivo
 exports.delete = (req, res) => {
   Goal.remove(req.params.goalId, (err, data) => {
     if (err) {

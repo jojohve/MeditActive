@@ -1,8 +1,6 @@
-const Range = require('../models/range.model');
+const Range = require('../models/range_model');
 
-// Create and Save a new Range
 exports.create = (req, res) => {
-  // Validate request
   if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!'
@@ -10,14 +8,13 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Range
+  // Creare un Intervallo
   const range = new Range({
     start_date: req.body.start_date,
     end_date: req.body.end_date,
     user_id: req.body.user_id
   });
 
-  // Save Range in the database
   Range.create(range, (err, data) => {
     if (err)
       res.status(500).send({
@@ -28,9 +25,15 @@ exports.create = (req, res) => {
   });
 };
 
-// Retrieve all Ranges from the database.
+// Leggere gli Intervalli
 exports.findAll = (req, res) => {
-  Range.getAll((err, data) => {
+  const filters = {
+    goal: req.query.goal,
+    start_date: req.query.start_date,
+    end_date: req.query.end_date
+  };
+
+  Range.getAll(filters, (err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -40,7 +43,7 @@ exports.findAll = (req, res) => {
   });
 };
 
-// Find a single Range with a rangeId
+// Leggere un Intervallo
 exports.findOne = (req, res) => {
   Range.findById(req.params.rangeId, (err, data) => {
     if (err) {
@@ -57,9 +60,8 @@ exports.findOne = (req, res) => {
   });
 };
 
-// Update a Range identified by the rangeId in the request
+// Modificare un Intervallo
 exports.update = (req, res) => {
-  // Validate Request
   if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!'
@@ -86,7 +88,7 @@ exports.update = (req, res) => {
   );
 };
 
-// Delete a Range with the specified rangeId in the request
+// Eliminare un Intervallo
 exports.delete = (req, res) => {
   Range.remove(req.params.rangeId, (err, data) => {
     if (err) {

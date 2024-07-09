@@ -1,9 +1,7 @@
 const sql = require('./db.js');
 
-// Constructor
-const User = function (user) {
+const User = function(user) {
   this.name = user.name;
-  this.surname = user.surname;
   this.email = user.email;
 };
 
@@ -21,7 +19,7 @@ User.create = (newUser, result) => {
 };
 
 User.findById = (userId, result) => {
-  sql.query(`SELECT * FROM users WHERE id = ${userId}`, (err, res) => {
+  sql.query('SELECT * FROM users WHERE id = ?', [userId], (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(err, null);
@@ -34,7 +32,6 @@ User.findById = (userId, result) => {
       return;
     }
 
-    // not found User with the id
     result({ kind: 'not_found' }, null);
   });
 };
@@ -54,8 +51,8 @@ User.getAll = result => {
 
 User.updateById = (id, user, result) => {
   sql.query(
-    'UPDATE users SET name = ?,surname = ?, email = ? WHERE id = ?',
-    [user.name, user.surname, user.email, id],
+    'UPDATE users SET name = ?, email = ? WHERE id = ?',
+    [user.name, user.email, id],
     (err, res) => {
       if (err) {
         console.log('error: ', err);
@@ -64,7 +61,6 @@ User.updateById = (id, user, result) => {
       }
 
       if (res.affectedRows == 0) {
-        // not found User with the id
         result({ kind: 'not_found' }, null);
         return;
       }
@@ -76,7 +72,7 @@ User.updateById = (id, user, result) => {
 };
 
 User.remove = (id, result) => {
-  sql.query('DELETE FROM users WHERE id = ?', id, (err, res) => {
+  sql.query('DELETE FROM users WHERE id = ?', [id], (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(err, null);
@@ -84,7 +80,6 @@ User.remove = (id, result) => {
     }
 
     if (res.affectedRows == 0) {
-      // not found User with the id
       result({ kind: 'not_found' }, null);
       return;
     }

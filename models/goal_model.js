@@ -1,6 +1,5 @@
 const sql = require('./db.js');
 
-// Constructor
 const Goal = function(goal) {
   this.goal = goal.goal;
   this.range_id = goal.range_id;
@@ -20,7 +19,7 @@ Goal.create = (newGoal, result) => {
 };
 
 Goal.findById = (goalId, result) => {
-  sql.query(`SELECT * FROM goals WHERE id = ${goalId}`, (err, res) => {
+  sql.query('SELECT * FROM goals WHERE id = ?', [goalId], (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(err, null);
@@ -33,7 +32,6 @@ Goal.findById = (goalId, result) => {
       return;
     }
 
-    // not found Goal with the id
     result({ kind: 'not_found' }, null);
   });
 };
@@ -63,7 +61,6 @@ Goal.updateById = (id, goal, result) => {
       }
 
       if (res.affectedRows == 0) {
-        // not found Goal with the id
         result({ kind: 'not_found' }, null);
         return;
       }
@@ -75,7 +72,7 @@ Goal.updateById = (id, goal, result) => {
 };
 
 Goal.remove = (id, result) => {
-  sql.query('DELETE FROM goals WHERE id = ?', id, (err, res) => {
+  sql.query('DELETE FROM goals WHERE id = ?', [id], (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(err, null);
@@ -83,7 +80,6 @@ Goal.remove = (id, result) => {
     }
 
     if (res.affectedRows == 0) {
-      // not found Goal with the id
       result({ kind: 'not_found' }, null);
       return;
     }

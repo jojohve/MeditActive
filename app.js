@@ -11,11 +11,11 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to our application.' });
 });
 
-require('./routes/user.routes')(app);
+require('./routes/user_routes')(app);
 
-require('./routes/range.routes')(app);
+require('./routes/range_routes')(app);
 
-require('./routes/goal.routes')(app);
+require('./routes/goal_routes')(app);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}.`);

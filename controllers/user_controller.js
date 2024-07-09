@@ -1,6 +1,5 @@
-const User = require('../models/user.model');
+const User = require('../models/user_model');
 
-// Create and Save a new User
 exports.create = (req, res) => {
   if (!req.body) {
     res.status(400).send({
@@ -9,14 +8,13 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a User
+  // Creare un Utente
   const user = new User({
     name: req.body.name,
     surname : req.body.surname,
     email: req.body.email
   });
 
-  // Save User in the database
   User.create(user, (err, data) => {
     if (err)
       res.status(500).send({
@@ -27,7 +25,7 @@ exports.create = (req, res) => {
   });
 };
 
-// Retrieve all Users from the database.
+// Leggere gli Utenti
 exports.findAll = (req, res) => {
   User.getAll((err, data) => {
     if (err)
@@ -39,7 +37,7 @@ exports.findAll = (req, res) => {
   });
 };
 
-// Find a single User with a userId
+// Leggere un Utente
 exports.findOne = (req, res) => {
   User.findById(req.params.userId, (err, data) => {
     if (err) {
@@ -56,7 +54,7 @@ exports.findOne = (req, res) => {
   });
 };
 
-// Update a User identified by the userId in the request
+// Modificare un Utente
 exports.update = (req, res) => {
   if (!req.body) {
     res.status(400).send({
@@ -84,7 +82,7 @@ exports.update = (req, res) => {
   );
 };
 
-// Delete a User with the specified userId in the request
+// Eliminare un Utente
 exports.delete = (req, res) => {
   User.remove(req.params.userId, (err, data) => {
     if (err) {
