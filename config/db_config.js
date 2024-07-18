@@ -7,12 +7,17 @@ const connection = mysql.createConnection({
   database: 'meditactive'
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Errore durante la connessione al database:', err);
-    throw err;
-  }
-  console.log('Connessione al database MySQL riuscita!');
-});
+function connectToDatabase() {
+  return new Promise((resolve, reject) => {
+    connection.connect((err) => {
+      if (err) {
+        console.error('Error connecting to database:', err);
+        reject(err);
+      }
+      console.log('Connected to MySQL database successfully!');
+      resolve(connection);
+    });
+  });
+}
 
-export default connection;
+export { connectToDatabase };

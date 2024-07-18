@@ -1,18 +1,17 @@
 {
   "name": "meditactive",
   "version": "1.0.0",
-  "description": "Descrizione del tuo progetto",
-  "main": "app.js",
+  "description": "Node.js application with MySQL database integration",
   "type": "module",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
+  "author": "localhost",
+  "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "mysql": "^2.18.1"
-  },
-  "author": "Joseph",
-  "license": "ISC"
+    "express": "^4.17.2",
+    "mysql": "^2.18.1",
+    "body-parser": "^1.19.0"
+  }
 }
