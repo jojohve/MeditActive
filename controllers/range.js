@@ -1,4 +1,4 @@
-import * as Range from '../models/range_model'
+import * as Range from '../models/range'
 
 exports.create = (req, res) => {
   if (!req.body) {

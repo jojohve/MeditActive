@@ -1,4 +1,4 @@
-import * as ranges from '../controllers/range_controller'
+import * as ranges from '../controllers/range'
 
 module.exports = app => {
 

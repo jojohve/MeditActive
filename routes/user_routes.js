@@ -1,4 +1,4 @@
-import * as users from '../controllers/user_controller'
+import * as users from '../controllers/user'
 
 module.exports = app => {
 

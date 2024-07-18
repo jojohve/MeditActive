@@ -1,4 +1,4 @@
-import * as Goal from '../models/goal_model'
+import * as Goal from '../models/goal'
 
 exports.create = (req, res) => {
   if (!req.body) {

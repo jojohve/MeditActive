@@ -1,4 +1,4 @@
-import * as User from '../models/user_model'
+import * as User from '../models/user'
 
 exports.create = (req, res) => {
   if (!req.body) {

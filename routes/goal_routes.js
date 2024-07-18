@@ -1,4 +1,4 @@
-import * as goals from '../controllers/goal_controller'
+import * as goals from '../controllers/goal'
 
 module.exports = app => {
 
