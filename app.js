@@ -1,8 +1,8 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as userRoutes from './routes/user_routes';
-import * as rangeRoutes from './routes/range_routes';
-import * as goalRoutes from './routes/goal_routes';
+import express from 'express';
+import bodyParser from 'body-parser';
+import userRoutes from './routes/user_routes.js';
+import rangeRoutes from './routes/range_routes.js';
+import goalRoutes from './routes/goal_routes.js';
 
 const app = express();
 const port = 3000;

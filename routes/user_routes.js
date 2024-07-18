@@ -1,6 +1,6 @@
-import * as users from '../controllers/user'
+import * as users from '../controllers/user.js'
 
-module.exports = app => {
+export default function (app) {
 
   // Creare un Utente
   app.post('/users', users.create);
@@ -15,5 +15,5 @@ module.exports = app => {
   app.put('/users/:userId', users.update);
 
   // Cancellare un Utente
-  app.delete('/users/:userId', users.delete);
+  app.delete('/users/:userId', users.remove);
 };

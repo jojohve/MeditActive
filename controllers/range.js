@@ -1,6 +1,6 @@
-import * as Range from '../models/range'
+import * as Range from '../models/range.js'
 
-exports.create = (req, res) => {
+export const create = async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!'
@@ -15,53 +15,54 @@ exports.create = (req, res) => {
     user_id: req.body.user_id
   });
 
-  Range.create(range, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while creating the Range.'
-      });
-    else res.send(data);
-  });
+  try {
+    const data = await range.create();
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Some error occurred while creating the Range.'
+    });
+  }
 };
 
 // Leggere gli Intervalli
-exports.findAll = (req, res) => {
+export const findAll = async (req, res) => {
   const filters = {
     goal: req.query.goal,
     start_date: req.query.start_date,
     end_date: req.query.end_date
   };
 
-  Range.getAll(filters, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while retrieving ranges.'
-      });
-    else res.send(data);
-  });
+  try {
+    const data = await Range.getAll(filters);
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Some error occurred while retrieving ranges.'
+    });
+  }
 };
 
 // Leggere un Intervallo
-exports.findOne = (req, res) => {
-  Range.findById(req.params.rangeId, (err, data) => {
-    if (err) {
-      if (err.kind === 'not_found') {
-        res.status(404).send({
-          message: `Not found Range with id ${req.params.rangeId}.`
-        });
-      } else {
-        res.status(500).send({
-          message: 'Error retrieving Range with id ' + req.params.rangeId
-        });
-      }
-    } else res.send(data);
-  });
+export const findOne = async (req, res) => {
+  try {
+    const data = await Range.findById(req.params.rangeId);
+    res.send(data);
+  } catch (err) {
+    if (err.kind === 'not_found') {
+      res.status(404).send({
+        message: `Not found Range with id ${req.params.rangeId}.`
+      });
+    } else {
+      res.status(500).send({
+        message: 'Error retrieving Range with id ' + req.params.rangeId
+      });
+    }
+  }
 };
 
 // Modificare un Intervallo
-exports.update = (req, res) => {
+export const update = async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!'
@@ -69,38 +70,38 @@ exports.update = (req, res) => {
     return;
   }
 
-  Range.updateById(
-    req.params.rangeId,
-    new Range(req.body),
-    (err, data) => {
-      if (err) {
-        if (err.kind === 'not_found') {
-          res.status(404).send({
-            message: `Not found Range with id ${req.params.rangeId}.`
-          });
-        } else {
-          res.status(500).send({
-            message: 'Error updating Range with id ' + req.params.rangeId
-          });
-        }
-      } else res.send(data);
+  const range = new Range(req.body);
+
+  try {
+    const data = await range.updateById(req.params.rangeId);
+    res.send(data);
+  } catch (err) {
+    if (err.kind === 'not_found') {
+      res.status(404).send({
+        message: `Not found Range with id ${req.params.rangeId}.`
+      });
+    } else {
+      res.status(500).send({
+        message: 'Error updating Range with id ' + req.params.rangeId
+      });
     }
-  );
+  }
 };
 
 // Eliminare un Intervallo
-exports.delete = (req, res) => {
-  Range.remove(req.params.rangeId, (err, data) => {
-    if (err) {
-      if (err.kind === 'not_found') {
-        res.status(404).send({
-          message: `Not found Range with id ${req.params.rangeId}.`
-        });
-      } else {
-        res.status(500).send({
-          message: 'Could not delete Range with id ' + req.params.rangeId
-        });
-      }
-    } else res.send({ message: `Range was deleted successfully!` });
-  });
+export const remove = async (req, res) => {
+  try {
+    await Range.remove(req.params.rangeId);
+    res.send({ message: `Range was deleted successfully!` });
+  } catch (err) {
+    if (err.kind === 'not_found') {
+      res.status(404).send({
+        message: `Not found Range with id ${req.params.rangeId}.`
+      });
+    } else {
+      res.status(500).send({
+        message: 'Could not delete Range with id ' + req.params.rangeId
+      });
+    }
+  }
 };

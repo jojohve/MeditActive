@@ -1,6 +1,6 @@
-import * as goals from '../controllers/goal'
+import * as goals from '../controllers/goal.js'
 
-module.exports = app => {
+export default function (app) {
 
   // Creare un Obiettivo
   app.post('/goals', goals.create);
@@ -15,5 +15,5 @@ module.exports = app => {
   app.put('/goals/:goalId', goals.update);
 
   // Cancellare un Obiettivo
-  app.delete('/goals/:goalId', goals.delete);
+  app.delete('/goals/:goalId', goals.remove);
 };

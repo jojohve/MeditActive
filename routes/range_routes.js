@@ -1,6 +1,6 @@
-import * as ranges from '../controllers/range'
+import * as ranges from '../controllers/range.js'
 
-module.exports = app => {
+export default function (app) {
 
   // Creare un Intervallo
   app.post('/ranges', ranges.create);
@@ -15,5 +15,5 @@ module.exports = app => {
   app.put('/ranges/:rangeId', ranges.update);
 
   // Cancellare un Intervallo
-  app.delete('/ranges/:rangeId', ranges.delete);
+  app.delete('/ranges/:rangeId', ranges.remove);
 };
