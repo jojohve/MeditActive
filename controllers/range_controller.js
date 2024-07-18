@@ -1,4 +1,4 @@
-const Range = require('../models/range_model');
+import * as Range from '../models/range_model'
 
 exports.create = (req, res) => {
   if (!req.body) {

@@ -1,5 +1,6 @@
+import * as ranges from '../controllers/range_controller'
+
 module.exports = app => {
-  const ranges = require('../controllers/range_controller');
 
   // Creare un Intervallo
   app.post('/ranges', ranges.create);

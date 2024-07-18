@@ -1,4 +1,4 @@
-const sql = require('./db.js');
+import * as sql from './db.js'
 
 const User = function(user) {
   this.name = user.name;

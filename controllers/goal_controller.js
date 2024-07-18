@@ -1,4 +1,4 @@
-const Goal = require('../models/goal_model');
+import * as Goal from '../models/goal_model'
 
 exports.create = (req, res) => {
   if (!req.body) {

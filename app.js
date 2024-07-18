@@ -1,5 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as userRoutes from './routes/user_routes';
+import * as rangeRoutes from './routes/range_routes';
+import * as goalRoutes from './routes/goal_routes';
+
 const app = express();
 const port = 3000;
 
@@ -11,11 +15,9 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to our application.' });
 });
 
-require('./routes/user_routes')(app);
-
-require('./routes/range_routes')(app);
-
-require('./routes/goal_routes')(app);
+userRoutes(app);
+rangeRoutes(app);
+goalRoutes(app);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}.`);

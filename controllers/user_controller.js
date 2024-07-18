@@ -1,4 +1,4 @@
-const User = require('../models/user_model');
+import * as User from '../models/user_model'
 
 exports.create = (req, res) => {
   if (!req.body) {
@@ -11,7 +11,7 @@ exports.create = (req, res) => {
   // Creare un Utente
   const user = new User({
     name: req.body.name,
-    surname : req.body.surname,
+    surname: req.body.surname,
     email: req.body.email
   });
 

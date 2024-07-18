@@ -1,4 +1,4 @@
-const sql = require('./db.js');
+import * as sql from './db.js'
 
 const Range = function(range) {
   this.start_date = range.start_date;

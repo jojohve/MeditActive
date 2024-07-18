@@ -1,4 +1,4 @@
-const sql = require('./db.js');
+import * as sql from './db.js'
 
 const Goal = function(goal) {
   this.goal = goal.goal;
