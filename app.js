@@ -6,7 +6,7 @@ import rangeRoutes from './routes/range_routes.js';
 import goalRoutes from './routes/goal_routes.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 connectToDatabase()
   .then(() => {
