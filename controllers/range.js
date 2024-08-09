@@ -33,9 +33,21 @@ export const findAll = async (req, res) => {
     end_date: req.query.end_date
   };
 
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
   try {
-    const data = await Range.getAll(filters);
-    res.send(data);
+    const { data, totalItems } = await Range.getAll(filters, offset, limit);
+
+    const totalPages = Math.ceil(totalItems / limit);
+
+    res.status(200).json({
+      data: data,
+      currentPage: page,
+      totalPages: totalPages,
+      totalItems: totalItems
+    });
   } catch (err) {
     res.status(500).send({
       message: err.message || 'Some error occurred while retrieving ranges.'

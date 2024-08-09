@@ -24,10 +24,23 @@ export const create = async (req, res) => {
   }
 };
 
+// Leggere gli ObiettivI
 export const findAll = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
   try {
-    const data = await Goal.getAll();
-    res.send(data);
+    const { data, totalItems } = await Goal.getAll(offset, limit);
+
+    const totalPages = Math.ceil(totalItems / limit);
+
+    res.status(200).json({
+      data: data,
+      currentPage: page,
+      totalPages: totalPages,
+      totalItems: totalItems
+    });
   } catch (err) {
     res.status(500).send({
       message: err.message || 'Some error occurred while retrieving goals.'
@@ -35,7 +48,7 @@ export const findAll = async (req, res) => {
   }
 };
 
-// Leggere gli ObiettivI
+// Leggere un Obiettivo
 export const findOne = async (req, res) => {
   try {
     const data = await Goal.findById(req.params.goalId);

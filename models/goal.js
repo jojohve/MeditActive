@@ -39,20 +39,14 @@ Goal.findById = function (goalId) {
     });
   });
 };
+Goal.getAll = async (offset, limit) => {
+  const query = 'SELECT * FROM Goals LIMIT ?, ?';
+  const [data] = await db.execute(query, [offset, limit]);
 
-Goal.getAll = function () {
-  return new Promise((resolve, reject) => {
-    sql.query('SELECT * FROM goals', (err, res) => {
-      if (err) {
-        console.log('error: ', err);
-        reject(err);
-        return;
-      }
+  const [countResult] = await db.execute('SELECT COUNT(*) as count FROM Goals');
+  const totalItems = countResult[0].count;
 
-      console.log('goals: ', res);
-      resolve(res);
-    });
-  });
+  return { data, totalItems };
 };
 
 Goal.prototype.updateById = function (id) {

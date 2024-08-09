@@ -40,19 +40,14 @@ User.findById = function (userId) {
   });
 };
 
-User.getAll = function () {
-  return new Promise((resolve, reject) => {
-    sql.query('SELECT * FROM users', (err, res) => {
-      if (err) {
-        console.log('error: ', err);
-        reject(err);
-        return;
-      }
+User.getAll = async (offset, limit) => {
+  const query = 'SELECT * FROM Users LIMIT ?, ?';
+  const [data] = await db.execute(query, [offset, limit]);
 
-      console.log('users: ', res);
-      resolve(res);
-    });
-  });
+  const [countResult] = await db.execute('SELECT COUNT(*) as count FROM Users');
+  const totalItems = countResult[0].count;
+
+  return { data, totalItems };
 };
 
 User.prototype.updateById = function (id) {

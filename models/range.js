@@ -41,46 +41,34 @@ Range.findById = function (rangeId) {
   });
 };
 
-Range.getAll = function (filters) {
-  return new Promise((resolve, reject) => {
-    let query = `
-    SELECT r.*, g.goal
-    FROM ranges r
-    LEFT JOIN goals g ON r.id = g.range_id
-  `;
-    let conditions = [];
-    let values = [];
+Range.getAll = async (filters, offset, limit) => {
+  let query = 'SELECT * FROM Ranges WHERE 1=1';
+  let queryParams = [];
 
-    if (filters.goal) {
-      conditions.push('g.goal LIKE ?');
-      values.push(`%${filters.goal}%`);
-    }
+  if (filters.goal) {
+    query += ' AND goal = ?';
+    queryParams.push(filters.goal);
+  }
 
-    if (filters.start_date) {
-      conditions.push('r.start_date >= ?');
-      values.push(filters.start_date);
-    }
+  if (filters.start_date) {
+    query += ' AND start_date >= ?';
+    queryParams.push(filters.start_date);
+  }
 
-    if (filters.end_date) {
-      conditions.push('r.end_date <= ?');
-      values.push(filters.end_date);
-    }
+  if (filters.end_date) {
+    query += ' AND end_date <= ?';
+    queryParams.push(filters.end_date);
+  }
 
-    if (conditions.length > 0) {
-      query += ' WHERE ' + conditions.join(' AND ');
-    }
+  query += ' LIMIT ?, ?';
+  queryParams.push(offset, limit);
 
-    sql.query(query, values, (err, res) => {
-      if (err) {
-        console.log('error: ', err);
-        reject(err);
-        return;
-      }
+  const [data] = await db.execute(query, queryParams);
 
-      console.log('ranges: ', res);
-      resolve(res);
-    });
-  });
+  const [countResult] = await db.execute('SELECT COUNT(*) as count FROM Ranges WHERE 1=1', queryParams.slice(0, -2));
+  const totalItems = countResult[0].count;
+
+  return { data, totalItems };
 };
 
 Range.prototype.updateById = (id) => {

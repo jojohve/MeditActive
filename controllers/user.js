@@ -26,13 +26,28 @@ export const create = async (req, res) => {
 };
 
 // Leggere gli Utenti
-export const findAll = async (res) => {
+export const findAll = async (req, res) => {
   try {
-    const data = await User.getAll();
-    res.send(data);
-  } catch (err) {
-    res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving users.'
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await User.findAndCountAll({
+      offset: offset,
+      limit: limit
+    });
+
+    const totalPages = Math.ceil(count / limit);
+
+    res.status(200).json({
+      data: rows,
+      currentPage: page,
+      totalPages: totalPages,
+      totalItems: count
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || 'An error occurred while retrieving Users.'
     });
   }
 };
