@@ -1,7 +1,7 @@
 MeditActive
 
 MeditActive è un'applicazione progettata per start2impact.
-Requisiti
+Requisiti:
 
     Node.js (v16 o superiore)
     npm (v7 o superiore)
