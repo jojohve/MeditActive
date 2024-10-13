@@ -1,6 +1,6 @@
 MeditActive
 
-MeditActive è un'applicazione progettata per [descrizione del progetto].
+MeditActive è un'applicazione progettata per start2impact.
 Requisiti
 
     Node.js (v16 o superiore)
