@@ -17,13 +17,9 @@ cd MeditActive
 
 Installa le dipendenze:
 
-bash
-
 npm install
 
 Esegui l'applicazione:
-
-bash
 
     npm start
 
