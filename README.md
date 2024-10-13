@@ -8,16 +8,17 @@ Requisiti
 
 Installazione
 
-    Clona questo repository:
+Clona questo repository:
 
-    bash
+    git clone
 
-git clone https://github.com/jojohve/MeditActive.git
-cd MeditActive
+https://github.com/jojohve/MeditActive.git
+
+    cd MeditActive
 
 Installa le dipendenze:
 
-npm install
+    npm install
 
 Esegui l'applicazione:
 
